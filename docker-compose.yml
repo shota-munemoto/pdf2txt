@@ -1,0 +1,7 @@
+version: "3"
+services:
+  pdf2txt:
+    build: .
+    image: pdf2txt
+    volumes:
+      - ./:/home/work/
