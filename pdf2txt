@@ -3,11 +3,8 @@
 
 target="$1"
 
-rm -rf "${target}.d"
 mkdir "${target}.d"
 
 pdftoppm -png "${target}" "${target}.d/page"
 find "${target}.d/" -type f -name "*.png" | sed 's/\.png$//' | xargs -P8 -n1 -I% tesseract %.png % -l eng+jpn
 cat ${target}.d/*.txt > "${target}.txt"
-
-rm -rf "${target}.d"
