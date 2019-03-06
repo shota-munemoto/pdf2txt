@@ -6,5 +6,5 @@ target="$1"
 mkdir "${target}.d"
 
 pdftoppm -png "${target}" "${target}.d/page"
-find "${target}.d/" -type f -name "*.png" | sed 's/\.png$//' | xargs -P8 -n1 -I% tesseract %.png % -l eng+jpn
+find "${target}.d/" -type f -name "*.png" | sed 's/\.png$//' | xargs -P8 -n1 -I% tesseract %.png % -l eng+jpn -c preserve_interword_spaces=1
 cat ${target}.d/*.txt > "${target}.txt"
