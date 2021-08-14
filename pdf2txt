@@ -1,10 +1,21 @@
 #!/bin/bash
 # pdf2txt foo.pdf
 
+echo "target: ${1}"
 target="$1"
 
+echo "mkdir ${target}.d"
 mkdir "${target}.d"
 
+echo "pdftoppm -png ${target} ${target}.d/page"
 pdftoppm -png "${target}" "${target}.d/page"
-find "${target}.d/" -type f -name "*.png" | sed 's/\.png$//' | xargs -P8 -n1 -I% tesseract %.png % -l eng+jpn -c preserve_interword_spaces=1
+
+tesseract --version
+
+tesseract_option="-l jpn+eng -c preserve_interword_spaces=1"
+find "${target}.d/" -type f -name "*.png" | sed 's/\.png$//' | xargs -P8 -I% bash -c "echo start tesseract %.png % ${tesseract_option}; tesseract %.png % ${tesseract_option}; echo finished tesseract %.png % ${tesseract_option}"
+
+echo "cat ${target}.d/*.txt > ${target}.txt"
 cat ${target}.d/*.txt > "${target}.txt"
+
+echo "finished"
