@@ -13,7 +13,7 @@ pdftoppm -png "${target}" "${target}.d/page"
 tesseract --version
 
 tesseract_option="-l jpn+eng -c preserve_interword_spaces=1"
-find "${target}.d/" -type f -name "*.png" | sed 's/\.png$//' | xargs -P8 -I% bash -c "echo \"start tesseract \\\"%.png\\\" \\\"%\\\" ${tesseract_option}\"; tesseract \"%.png\" \"%\" ${tesseract_option}; echo \"finished tesseract \\\"%.png\\\" \\\"%\\\" ${tesseract_option}\""
+find "${target}.d/" -type f -name "*.png" | sed 's/\.png$//' | xargs -P2 -I% bash -c "echo \"start tesseract \\\"%.png\\\" \\\"%\\\" ${tesseract_option}\"; tesseract \"%.png\" \"%\" ${tesseract_option}; echo \"finished tesseract \\\"%.png\\\" \\\"%\\\" ${tesseract_option}\""
 
 echo "cat \"${target}.d\"/*.txt > \"${target}.txt\""
 cat "${target}.d"/*.txt > "${target}.txt"
